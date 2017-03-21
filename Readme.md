@@ -2,6 +2,11 @@
 
 This repository chronicles my project to build a telephone ring voltage generator using an Arduino-like microcontroller.  The goal is to generate a 90V AC signal at 20Hz.
 
+This project went through many phases, which I've documented approximately in the history of this repository.
+1. [Phase 1: Generate a simple 5V/20Hz square wave](https://github.com/jonscheiding/phone-ringer/tree/step-1)
+2. [Phase 2: Boost the 5V/20Hz square wave to 18V](https://github.com/jonscheiding/phone-ringer/tree/step-2)
+3. **Phase 3: Boost the 18V/20Hz square wave to 90V**
+
 ### PARTS
 
 These are the parts I used, with links.
