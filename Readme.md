@@ -7,8 +7,10 @@ This repository chronicles my project to build a telephone ring voltage generato
 **PARTS:**
 - Particle Photon
 - L293D Quadruple Half-H Bridge
+- Adjustable DC boost converter  
+  I used this LM2577-based model: http://a.co/huLOzfz
 
-### 1. Generate an AC square wave at 5V/20Hz
+### 1. Generate an AC square wave at 18V/20Hz
 
 Initially, let's just generate a simple AC square wave.  The circuit looks like this:
 
@@ -18,7 +20,9 @@ Initially, let's just generate a simple AC square wave.  The circuit looks like 
 
 The code looks like [this](phone-ringer.ino).  We're generating a push-pull square wave by alternately activating one or the other of the outputs on our h-bridge.  This is a little different than normal (i.e. mains) AC power, in that we don't have a "neutral" line that remains at ground potential and a "hot" that oscillates above and below.  Instead, our two lines take turns being the "hot".
 
-Once you build this circuit and power it up, you should get a reading on your voltmeter in AC mode.  If it is a "true RMS" meter, it should read 5V.  Otherwise, the reading may be lower, or inconsistent.  I don't have an oscilloscope, but if you hooked one up you would see something like this:
+Before building the circuit, you'll want to set the boost converter to an appropriate voltage.  An easy way to do this is to hook up the input to a couple of AA batteries, and connect a large resistor and your voltmeter to the output.  You can then turn the pot to set the voltage.  For now, I set mine to 18V - we may adjust this later.
+
+Once you build this circuit and power it up, you should get a reading on your voltmeter in AC mode.  If it is a "true RMS" meter, it should read 18V.  Otherwise, the reading may be lower, or inconsistent.  I don't have an oscilloscope, but if you hooked one up you would see something like this:
 
 ![A/C square wave result](waveform.png)
 
