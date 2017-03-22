@@ -1,0 +1,16 @@
+{
+  "name": "pwm-lookup-generator",
+  "version": "1.0.0",
+  "description": "Utility to generate PWM lookups for half-sine wave cycle.",
+  "main": "main.js",
+  "repository": "https://github.com/jonscheiding/phone-ringer",
+  "scripts": {
+    "generate": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pad": "^1.1.0",
+    "split-array": "^1.0.1"
+  }
+}
