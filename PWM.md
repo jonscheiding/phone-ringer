@@ -16,3 +16,25 @@ After editing the `config.json`, run the following:
     npm run generate
 
 The output will be some C code, defining the relevant constants, which you can paste into your firmware.  See the [code](phone-ringer.ino) for how this is used.
+
+In our case, we're not directly using the PWM output to drive the phone - instead, we are using it to switch the outputs of the h-bridge.  As long as the h-bridge can respond quickly enough, this results in a PWM output from it, at the higher voltage.
+
+### The RC filter
+
+Although the transformer may help round it off somewhat, the "naked" PWM signal will probably not do a very good job of driving the phone due to the high-frequency square wave component. We can use an RC filter to turn this into a more "pure" sine wave.
+
+An RC filter looks like this:
+
+![RC filter diagram](https://static.tiendy.com/shops/opendaq/uploads/rc_schema.png)
+
+The RC filter eliminates the higher-frequency portions of the signal, leaving (ideally) only the lower-frequency sine wave.  The values of R and C are determined by the formula
+
+ ![](http://www.ekswai.com/wp-content/uploads/highlow.gif)
+ 
+ where `f` is the cutoff frequency.  There are a lot of tradeoffs to be made here, which an electrical engineer would probably understand very well and explain in terms of complex impedance.  I will provide the following gross oversimplification:
+ 
+  * A higher `f` means a "messier" signal, to which some phones will be more sensitive than others.
+  * A higher `C` means your circuit will draw more current.
+  * A higher `R` means a lower `Vout` and thus a bigger transformer needed.
+
+You'll want to experiment in a simulator and in real life with different R and C values.  I got decent results using 100Ω and 470μF.
