@@ -11,7 +11,7 @@ const int AC_PIN_1 = D0;
 const int AC_PIN_2 = D1;
 
 //
-// Sine wave lookup table and step interval in microseconds
+// PWM sine wave lookup functions
 //
 const short PWM_LOOKUP[] = {
       0,   3,   6,  10,  13,  16,  19,  22,  26,  29,  32,  35,  38,  41,  45,  48,  51,  54,  57,  60,  63,  67,  70,  73,  76,

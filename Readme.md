@@ -18,13 +18,14 @@ These are the parts I used, with links.
 
 ### BUILD
 
+The code looks like [this](phone-ringer.ino).  We're using [PWM](Pwm.md) to approximate the positive half of a sine waveform on one of our h-bridge outputs, and then on the other one.  This is a little different than normal (i.e. mains) AC power, in that we don't have a "neutral" line that remains at ground potential and a "hot" that oscillates above and below.  Instead, our two lines take turns being the "hot".
+
 The circuit looks like this:
 
-![A/C square wave generator circuit diagram](circuit-diagram.png)
+![A/C wave generator circuit diagram](circuit-diagram.png)
 
-(Vcc's and GNDs should all be connected together.  You can use the Micro USB connector on the Photon to actually power the whole thing for now, but we'll probably want to change that eventually.)
+Vcc should all be connected together and so should GND.  Right now, we're using the Micro USB connector on the Photon to actually power the whole thing, but we'll probably want to change that eventually.  We're using an [RC filter](Pwm.md) to turn the PWM approximated sine wave into a real one.
 
-The code looks like [this](phone-ringer.ino).  We're generating a push-pull square wave by alternately activating one or the other of the outputs on our h-bridge.  This is a little different than normal (i.e. mains) AC power, in that we don't have a "neutral" line that remains at ground potential and a "hot" that oscillates above and below.  Instead, our two lines take turns being the "hot".
 
 Before building the circuit, you'll want to set the boost converter to an appropriate voltage.  An easy way to do this is to hook up the input to a couple of AA batteries, and connect a large resistor and your voltmeter to the output.  You can then turn the pot to set the voltage.  The correct voltage depends on the ratio of your step-up transformer.  For mine, I used a 1:5 transformer and set my boost converter to 18V.  See [The Step-Up Transformer](Transformer.md) for more details.
 
@@ -32,8 +33,6 @@ Notice that on the other side of the transformer, we've included a resistor `Rli
 
 ### RESULTS
 
-Once you build this circuit and power it up, you should get a reading on your voltmeter in AC mode.  If it is a "true RMS" meter, it should read close to 90V.  Otherwise, the reading may be lower, or inconsistent.
+Once you build this circuit and power it up, you should get a reading of around 60V on your voltmeter in AC mode.
 
 At this point, you're ready to test the circuit with an actual phone!  Snip one end off of a phone cord, strip the two wires, and connect them to the plug side of your transformer.  If you plug the other end of the cord into a phone, it should ring!
-
-If it sounds weird, don't worry.  We'll deal with that soon.

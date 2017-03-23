@@ -1,3 +1,8 @@
+//
+// Generates a lookup table for the positive half of a sine wave,
+// at the desired resolution and frequency
+//
+
 const pad = require('pad');
 const splitArray = require('split-array');
 
@@ -8,6 +13,9 @@ const periodInMicroseconds = (1 / CONFIG.frequencyInHz) * MICROSECONDS_PER_SECON
 const steps = (periodInMicroseconds / CONFIG.resolutionInMicroseconds);
 const f = x => Math.sin(2 * Math.PI * x);
 
+//
+// Function that formats an array into multiple comma-delimited lines
+//
 const formatArray = (array, lines, linePrefix) => {
   const itemsPerLine = array.length / lines;
   const lineChunks = splitArray(result, 25);
@@ -18,6 +26,9 @@ const formatArray = (array, lines, linePrefix) => {
 
 const result = [];
 
+//
+// Generate the first half of the sine wave (the positive half)
+//
 for(let step = 0; step < (steps / 2); step++) {
   const time = (1 / steps) * step;
   const value = CONFIG.amplitude * f(time);
