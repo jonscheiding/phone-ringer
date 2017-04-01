@@ -1,10 +1,4 @@
 //
-// A/C wave frequency in Hz and period in milliseconds
-//
-const float AC_FREQUENCY_HZ = 20;
-const long AC_PERIOD_MS = static_cast<long>((1 / AC_FREQUENCY_HZ) * 1000);
-
-//
 // Pins to use for the A/C control voltage
 //
 const int AC_PIN_1 = D0;
