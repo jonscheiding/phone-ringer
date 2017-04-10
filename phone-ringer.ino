@@ -3,6 +3,7 @@
 //
 const int AC_PIN_1 = D0;
 const int AC_PIN_2 = D1;
+const int ACTIVATE_PIN = A1;
 
 //
 // PWM sine wave lookup functions
@@ -22,14 +23,27 @@ const short PWM_LOOKUP[] = {
 const int PWM_LOOKUP_LENGTH = 250;
 const int PWM_STEP_MICROSECONDS = 100;
 
+const int AC_PERIOD_MILLISECONDS = PWM_LOOKUP_LENGTH * PWM_STEP_MICROSECONDS * 2 / 1000;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
     pinMode(AC_PIN_1, OUTPUT);
     pinMode(AC_PIN_2, OUTPUT);
+    pinMode(ACTIVATE_PIN, INPUT_PULLDOWN);
 }
 
 void loop() {
+    doFullWave();
+}
+
+bool isActivated() {
+    return digitalRead(ACTIVATE_PIN) == HIGH;
+}
+
+void doFullWave() {
+    if(!isActivated()) return;
+    
     digitalWrite(AC_PIN_1, LOW);
     doHalfWave(AC_PIN_2);
     digitalWrite(AC_PIN_2, LOW);
