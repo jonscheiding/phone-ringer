@@ -28,6 +28,8 @@ The code looks like [this](phone-ringer.ino).  We're generating a push-pull squa
 
 Before building the circuit, you'll want to set the boost converter to an appropriate voltage.  An easy way to do this is to hook up the input to a couple of AA batteries, and connect a large resistor and your voltmeter to the output.  You can then turn the pot to set the voltage.  The correct voltage depends on the ratio of your step-up transformer.  For mine, I used a 1:5 transformer and set my boost converter to 18V.  See [The Step-Up Transformer](Transformer.md) for more details.
 
+Notice that on the other side of the transformer, we've included a resistor `Rlimit`.  When off hook, the impedance presented by the phone is very low - reports vary but it is probably in the 500Ω range.  Driving this with 90V will cause a pretty high current, and make a loud buzzing from the earpiece speaker.  The `Rlimit` resistor prevents this.  You'll want to choose a resistor value that is much larger than 500Ω, but very much smaller than the on-hook impedance (which should be in the 5MΩ range).  I got good results using 10KΩ for `Rlimit`.
+
 ### RESULTS
 
 Once you build this circuit and power it up, you should get a reading on your voltmeter in AC mode.  If it is a "true RMS" meter, it should read close to 90V.  Otherwise, the reading may be lower, or inconsistent.
