@@ -34,7 +34,25 @@ void setup() {
 }
 
 void loop() {
-    doFullWave();
+    ringPattern();
+}
+
+void ringPattern() {
+    ring(true, 2000);
+    ring(false, 3000);
+}
+
+void ring(bool ringing, int milliseconds) {
+    int periods = milliseconds / AC_PERIOD_MILLISECONDS;
+    for(int i = 0; i < periods; i++) {
+        if(!isActivated()) return;
+        
+        if(ringing) {
+          doFullWave(); 
+        } else {
+          delay(AC_PERIOD_MILLISECONDS);
+        }
+    }
 }
 
 bool isActivated() {
@@ -42,8 +60,6 @@ bool isActivated() {
 }
 
 void doFullWave() {
-    if(!isActivated()) return;
-    
     digitalWrite(AC_PIN_1, LOW);
     doHalfWave(AC_PIN_2);
     digitalWrite(AC_PIN_2, LOW);
