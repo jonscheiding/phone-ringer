@@ -3,7 +3,7 @@
 //
 const int AC_PIN_1 = D0;
 const int AC_PIN_2 = D1;
-const int ACTIVATE_PIN = A1;
+const int ACTIVATE_PIN = A0;
 
 //
 // PWM sine wave lookup functions
@@ -25,12 +25,16 @@ const int PWM_STEP_MICROSECONDS = 100;
 
 const int AC_PERIOD_MILLISECONDS = PWM_LOOKUP_LENGTH * PWM_STEP_MICROSECONDS * 2 / 1000;
 
+bool isActivated = false;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
     pinMode(AC_PIN_1, OUTPUT);
     pinMode(AC_PIN_2, OUTPUT);
     pinMode(ACTIVATE_PIN, INPUT_PULLDOWN);
+    
+    attachInterrupt(ACTIVATE_PIN, setActivatedFromPin, CHANGE);
 }
 
 void loop() {
@@ -45,7 +49,7 @@ void ringPattern() {
 void ring(bool ringing, int milliseconds) {
     int periods = milliseconds / AC_PERIOD_MILLISECONDS;
     for(int i = 0; i < periods; i++) {
-        if(!isActivated()) return;
+        if(!isActivated) return;
         
         if(ringing) {
           doFullWave(); 
@@ -55,8 +59,8 @@ void ring(bool ringing, int milliseconds) {
     }
 }
 
-bool isActivated() {
-    return digitalRead(ACTIVATE_PIN) == HIGH;
+void setActivatedFromPin() {
+    isActivated = digitalRead(ACTIVATE_PIN) == HIGH;
 }
 
 void doFullWave() {
