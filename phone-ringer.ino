@@ -35,6 +35,8 @@ void setup() {
     pinMode(ACTIVATE_PIN, INPUT_PULLDOWN);
     
     attachInterrupt(ACTIVATE_PIN, setActivatedFromPin, CHANGE);
+    
+    Particle.function("setActivated", setActivatedFromCloud);
 }
 
 void loop() {
@@ -61,6 +63,18 @@ void ring(bool ringing, int milliseconds) {
 
 void setActivatedFromPin() {
     isActivated = digitalRead(ACTIVATE_PIN) == HIGH;
+}
+
+int setActivatedFromCloud(String state) {
+    if(state == "true") {
+        isActivated = true;
+    } else if(state == "false") {
+        isActivated = false;
+    } else {
+        return 0;
+    }
+    
+    return 1;
 }
 
 void doFullWave() {
