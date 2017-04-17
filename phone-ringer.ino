@@ -58,6 +58,8 @@ void ring(bool ringing, int milliseconds) {
         } else {
           delay(AC_PERIOD_MILLISECONDS);
         }
+        
+        Particle.process();
     }
 }
 
