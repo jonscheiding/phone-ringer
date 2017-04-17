@@ -4,6 +4,7 @@
 const int AC_PIN_1 = D0;
 const int AC_PIN_2 = D1;
 const int ACTIVATE_PIN = A0;
+const int LED_PIN = D7;
 
 //
 // PWM sine wave lookup functions
@@ -32,6 +33,7 @@ bool isActivated = false;
 void setup() {
     pinMode(AC_PIN_1, OUTPUT);
     pinMode(AC_PIN_2, OUTPUT);
+    pinMode(LED_PIN, OUTPUT);
     pinMode(ACTIVATE_PIN, INPUT_PULLDOWN);
     
     attachInterrupt(ACTIVATE_PIN, setActivatedFromPin, CHANGE);
@@ -49,6 +51,8 @@ void ringPattern() {
 }
 
 void ring(bool ringing, int milliseconds) {
+    digitalWrite(LED_PIN, isActivated ? HIGH : LOW);
+    
     int periods = milliseconds / AC_PERIOD_MILLISECONDS;
     for(int i = 0; i < periods; i++) {
         if(!isActivated) return;
