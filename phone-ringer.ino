@@ -1,3 +1,5 @@
+#include <vector>;
+
 //
 // Pins to use for the A/C control voltage
 //
@@ -28,6 +30,8 @@ const int AC_PERIOD_MILLISECONDS = PWM_LOOKUP_LENGTH * PWM_STEP_MICROSECONDS * 2
 
 bool isActivated = false;
 
+std::vector<int> ringPattern;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
@@ -39,15 +43,26 @@ void setup() {
     attachInterrupt(ACTIVATE_PIN, setActivatedFromPin, CHANGE);
     
     Particle.function("setActivated", setActivatedFromCloud);
+    Particle.function("setPattern", setRingPatternFromCloud);
+    
+    ringPattern.push_back(2000);
+    ringPattern.push_back(3000);
 }
 
 void loop() {
-    ringPattern();
+    doRingPattern();
 }
 
-void ringPattern() {
-    ring(true, 2000);
-    ring(false, 3000);
+void doRingPattern() {
+    if(ringPattern.size() == 0) {
+        ring(true, 1000);
+    }
+    
+    bool toggle = true;
+    for(int i = 0; i < ringPattern.size(); i++) {
+        ring(toggle, ringPattern[i]);
+        toggle = !toggle;
+    }
 }
 
 void ring(bool ringing, int milliseconds) {
@@ -81,6 +96,25 @@ int setActivatedFromCloud(String state) {
     }
     
     return 1;
+}
+
+int setRingPatternFromCloud(String command) {
+    ringPattern.clear();
+    
+    int startIndex = 0, endIndex = 0;
+    while(endIndex != -1) {
+        endIndex = command.indexOf(",", startIndex);
+        String value = endIndex == -1 
+            ? command.substring(startIndex)
+            : command.substring(startIndex, endIndex)
+            ;
+                    
+        startIndex = endIndex + 1;
+        
+        ringPattern.push_back(value.toInt());
+    }
+    
+    return ringPattern.size();
 }
 
 void doFullWave() {
