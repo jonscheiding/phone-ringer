@@ -10,7 +10,6 @@ const MICROSECONDS_PER_SECOND = 1000000;
 const CONFIG = require('./config.json');
 
 const periodInMicroseconds = (1 / CONFIG.frequencyInHz) * MICROSECONDS_PER_SECOND;
-const steps = (periodInMicroseconds / CONFIG.resolutionInMicroseconds);
 const f = x => Math.sin(2 * Math.PI * x);
 
 //
@@ -29,17 +28,21 @@ const result = [];
 //
 // Generate the first half of the sine wave (the positive half)
 //
-for(let step = 0; step < (steps / 2); step++) {
-  const time = (1 / steps) * step;
+for(let step = 0; step < (CONFIG.resolutionInSteps / 2); step++) {
+  const time = (1 / CONFIG.resolutionInSteps) * step;
   const value = CONFIG.amplitude * f(time);
   
   result.push(Math.round(value));
 }
 
 console.log(`
+const short FREQUENCY_HZ = ${CONFIG.frequencyInHz};
 const short PWM_LOOKUP[] = {
 ${formatArray(result, 10, '    ')}
 };
 const int PWM_LOOKUP_LENGTH = ${result.length};
-const int PWM_STEP_MICROSECONDS = ${CONFIG.resolutionInMicroseconds};
+const int PWM_STEP_MICROSECONDS = ${MICROSECONDS_PER_SECOND} / (FREQUENCY_HZ * PWM_LOOKUP_LENGTH * 2);
 `);
+
+
+(((1/20*2)/2)*1000000)/250

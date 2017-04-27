@@ -1,5 +1,5 @@
 {
   "frequencyInHz": 20,
-  "resolutionInMicroseconds": 100,
+  "resolutionInSteps": 500,
   "amplitude": 255
 }
