@@ -80,6 +80,9 @@ void ring(bool ringing, int milliseconds) {
         
         Particle.process();
     }
+    
+    digitalWrite(AC_PIN_1, LOW);
+    digitalWrite(AC_PIN_2, LOW);
 }
 
 void setActivatedFromPin() {
