@@ -1,5 +1,8 @@
 # Arduino-Like Telephone Ring Voltage Generator
 
+> **NOTE**
+> This project is somewhat incomplete. The finished product was able to ring a modern electronic telephone, but it wasn't able to drive the physical clapper on an older phone. I didn't pursue it any further from that point, so take what's here with a grain of salt.
+
 This repository chronicles my project to build a telephone ring voltage generator using an Arduino-like microcontroller.  The goal is to generate a 90V AC signal at 20Hz.
 
 This project went through many phases, which I've documented approximately in the history of this repository.
